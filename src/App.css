@@ -1,0 +1,140 @@
+.p0{
+  padding:0;
+}
+.green{
+  background-color: green;
+}
+.red{
+  background-color: red;
+}
+.loginPage-wrapper {
+display: flex;
+}
+.loginPage-wrapper .loginPage{
+  margin: auto;
+}
+.mainContainer .header{
+  padding: 0;
+ }
+ .headerContent{
+  background-color: thistle;
+  padding: 20px 0;
+  display: flex;
+ }
+ .headerContent .support-text{
+  font-size: 18px;
+  color: black;
+ }
+ .headerContent .button-text{
+  color: red;
+  font-weight: bold;
+  background-color: white;
+ }
+ .headerContent h1{
+  color: red;
+  text-shadow: 2px 3px 3px violet;
+  font-family: 'Times New Roman', Times, serif;
+  margin: 0 30px;
+  font-weight: bold;
+  }
+  .navContent{
+  background-color: teal;
+  }
+  
+  .nav li{
+  padding:10px 50px;
+  color: white;
+  font-weight: bold; 
+  }
+  .nav li:hover{
+  background-color: white;
+ color: blue;
+  }
+ .mainpageContent .listContent-wrapper .placeOrder .badgeNumber{
+  font-size: 15px;
+  margin-left: 10px;
+  padding:5px; 
+  border-radius: 5px;
+ }
+ .mainpageContent .listContent-wrapper{
+   margin-top: 20px;
+ }
+ .mainpageContent .statisticsnull{
+  padding:30px;
+  color: red;
+  font-size: 24px;
+  font-weight: bold;
+ }
+ .statistics-wrapper .statisticsTable table{
+  margin: 40px auto;
+ }
+ .mainpageContent .statisticsTable table tr td{
+ border: 1px solid black;
+ padding:20px;
+ }
+ .footer-section {
+  background-color: teal;
+  height: 200px;
+  justify-content: flex-end;
+ }
+ .footer-section .footer-search{
+  padding: 30px;margin:0 auto; 
+ }
+ .footer-section .footer-search .searchbtn{
+  height: fit-content;
+ } 
+ .footer-section .footer-search input{
+  background-color: lightgray;
+  text-align: center;
+  
+ }
+ .footer-section .footer-search input:hover{
+ background-color: white;
+ }
+ .footer-section .footerStatistics .statisticsbtn{
+  background-color: white;
+  font-weight: bold;
+ }
+ .dropdowntrigger{
+   margin:0 auto;
+   
+ }
+ .dropdowntrigger .dropdownlist{
+   padding: 0;
+ }
+ .dropdowntrigger li{
+   color: gray;
+   list-style-type: none;
+   z-index:10;
+   background-color: white;position:relative;
+ }
+ .dropdowntrigger li:hover{
+color: blue;
+ }
+ .footer-section .footerStatistics .statisticsbtn:hover{
+  background-color: gray;
+ }
+ /**ManageListItem css starts */
+ .manageItem-wrapper{
+   display: flex;
+   margin: 15px 0;
+ }
+ .manageItem-wrapper .manageItem{
+   border: 1px gray solid;
+   border-radius: 5px;
+ }
+ .manageItem-wrapper .manageItem .row{
+padding: 10px 0;
+ }
+ .manageItem-wrapper .manageItem .btn-checkout{
+   margin: 10px;
+ }
+ .statistics-align{
+   display:flex;
+   margin-bottom: 25px;
+ }
+.statistics-align .statistics-align-center{
+  margin:auto;
+  display: flex;
+  padding-left: 100px;
+}
