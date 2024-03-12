@@ -1,12 +1,12 @@
 {
-  "name": "mernstack",
+  "name": "ECommerce Web App",
   "version": "1.0.0",
   "description": "This is the first mern stack project for my learning",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Rupesh Kumar",
+  "author": "Rupesh Kumar Bathina",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^4.0.1",
