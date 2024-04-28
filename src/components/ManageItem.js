@@ -6,10 +6,11 @@ class ManageItem extends React.Component {
     super(props);
     this.state = {
       itemNameToAdd: "",
-      itemCategory: "",
+      itemCategory: "Sides",
       itemImage: "",
       itemPrice: "",
       itemOrigin: "",
+      itemId: 0
     };
   }
  
@@ -31,22 +32,24 @@ class ManageItem extends React.Component {
   itemOriginFunc = (e) => {
     this.setState({ itemOrigin: e.target.value });
   };
+  itemIdFunc = (e) => {
+    this.setState({ itemId: e.target.value });
+  };
   onProceedFunc = (e) => {
     e.preventDefault();
     let d = new Date();
     document.getElementById("myForm").reset();
-    let todayDate = d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear();
     let requestData = {
       itemNameToAdd: this.state.itemNameToAdd,
       itemCategory: this.state.itemCategory,
       itemImage: this.state.itemImage,
       itemPrice: this.state.itemPrice,
       itemOrigin: this.state.itemOrigin,
-      itemAddedDate: todayDate,
+      itemId: this.state.itemId
     };
     console.log(requestData);
     axios.post("http://localhost:5000/itemsDetails/add", requestData)
-      .then((res) => console.log(res.data))
+      .then((res) => console.log(res))
   };
 
   render() {
@@ -55,7 +58,7 @@ class ManageItem extends React.Component {
         <section className="manageItem-wrapper col-md-12 col-lg-12 col-sm-12">
           <section className="col-md-6 col-lg-6 col-sm-6 col-xs-12 manageItem ">
             <section className="col-md-12 col-lg-12 col-sm-12 p0">
-              <h2>Admin Side Support</h2>
+              <h2>You can add your dish</h2>
             </section>
             <form onSubmit={this.onProceedFunc} id="myForm">
               <section className="row">
@@ -82,26 +85,9 @@ class ManageItem extends React.Component {
                     className="custom-select"
                     onChange={this.itemCategoryFunc.bind(this)}
                   >
-                    <option>Television</option>
-                    <option>MobilePhone</option>
-                    <option>Laptops</option>
-                    <option>Headphones</option>
-                    <option>Earphones</option>
+                    <option>Sides</option>
+                    <option>Main Dish</option>
                   </select>
-                </section>
-              </section>
-              <section className="row">
-                <section className="col-md-6 col-lg-6 col-sm-6 ">
-                  <strong>Item Image</strong>
-                </section>
-                <section className="col-md-6 col-lg-6 col-sm-6 ">
-                  <input
-                    type="text"
-                    className="form-control"
-                    name={this.state.itemImage}
-                    placeholder="Item Image"
-                    onChange={this.itemImageFunc.bind(this)}
-                  />
                 </section>
               </section>
               <section className="row">
@@ -115,6 +101,20 @@ class ManageItem extends React.Component {
                     name={this.state.itemPrice}
                     placeholder="Item Price"
                     onChange={this.itemPriceFunc.bind(this)}
+                  />
+                </section>
+              </section>
+              <section className="row">
+                <section className="col-md-6 col-lg-6 col-sm-6 ">
+                  <strong>Item Id</strong>
+                </section>
+                <section className="col-md-6 col-lg-6 col-sm-6 ">
+                  <input
+                    type="text"
+                    className="form-control"
+                    name={this.state.itemId}
+                    placeholder="Item Id"
+                    onChange={this.itemIdFunc.bind(this)}
                   />
                 </section>
               </section>
@@ -140,16 +140,6 @@ class ManageItem extends React.Component {
                 />
               </section>
             </form>
-          </section>
-          <section className="col-lg-6 col-md-6 col-sm-6 col-xs-6 image-list">
-            <ul className="Imagelist">
-              <li>TV Images("../Images/tv-images.jpg")</li>
-              <li>Mobile Images("../Images/mobileImages.jpg")</li>
-              <li>Laptop Images("../Images/laptop-image.jpg")</li>
-              <li>headphone Images("../Images/headphone-images.jpg")</li>
-              <li>earphone Images("../Images/earphoneImages.jpg")</li>
-            </ul>
-            <strong>Try copy these images in ItemImage field</strong>
           </section>
         </section>
       </section>

@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import ManageItem from "./ManageItem.js";
+import ItemModal from "./ItemModal.js";
 class Demo extends React.Component {
   constructor(props) {
     super(props);
@@ -124,7 +125,7 @@ class Demo extends React.Component {
       orderStatistics: [...this.state.orderStatistics, cartData],
       TotalPrice: value,
     });
-  };
+  }
   welfareContributeFunc = (e) => {
     this.setState({ welfareAmount: e.target.value });
   };
@@ -136,91 +137,13 @@ class Demo extends React.Component {
   render() {
     return (
       <section className="page-wrapper mainContainer">
-        <section className="container-fluid ">
+        <section className="container-fluid p0">
           <section className="col-md-12 col-lg-12 col-sm-12 header">
-            <section className="col-md-12 col-lg-12 col-sm-12 headerContent">
-              <section className="col-lg-8 col-md-8 col-sm-12">
-                <h1>WalKart</h1>
-              </section>
-              <section className="col-lg-4 col-md-4 col-sm-12">
-                <span className="support-text">
-                  Support daily wages with some amount.No amount is less so
-                  contribute to our workers folks.
-                </span>
-                <span
-                  className="btn button-text"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                >
-                  Donate now!!!!{" "}
-                </span>
-              </section>
-
-              <section
-                className="modal fade"
-                id="exampleModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <section className="modal-dialog" role="document">
-                  <section className="modal-content">
-                    <section className="modal-header">
-                      <span className="modal-title" id="exampleModalLabel">
-                        <strong>
-                          We make a living by what we get....Actually we make a
-                          life By what we give!!!!
-                        </strong>
-                      </span>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </section>
-                    <section className="modal-body ">
-                      <form onSubmit={this.onWelfareSubmit} id="welfare-submit">
-                        <section className="row">
-                          <section className="col-md-6 col-lg-6 col-sm-6 ">
-                            <strong>Contribute what you could </strong>
-                            <small>
-                              (we will you contribution amount to your next
-                              bill)
-                            </small>
-                          </section>
-                          <section className="col-md-6 col-lg-6 col-sm-6 ">
-                            <input
-                              type="tel"
-                              id="welfare-textbox"
-                              className="form-control"
-                              name={this.state.itemImage}
-                              placeholder="Enter your amount"
-                              onChange={this.welfareContributeFunc.bind(this)}
-                            />
-                          </section>
-                        </section>
-                        <section className="modal-footer">
-                          <input
-                            type="submit"
-                            className="btn btn-primary"
-                            value="Contribute to Welfare"
-                          />
-                        </section>
-                      </form>
-                    </section>
-                  </section>
-                </section>
-              </section>
-            </section>
             <section className="col-lg-12 col-md-12 col-sm-12 navContent position-relative">
               <ul className="nav">
-                <li onClick={this.homeContent}>Home</li>
-                <li onClick={this.aboutContent}>About Us</li>
-                <li onClick={this.menuContent}>Today's Special</li>
+                <li className={`${this.state.homeEnable? 'selected': ''}`} onClick={this.homeContent}>Home</li>
+                <li className={`${this.state.aboutEnable? 'selected': ''}`} onClick={this.aboutContent}>About Us</li>
+                <li className={`${this.state.listEnable? 'selected': ''}`} onClick={this.menuContent}>Today's Special</li>
                 <li className="dropdowntrigger" onClick={this.dropdownlistShow}>
                   My Profile
                   {this.state.dropdownlistEnable && (
@@ -245,12 +168,12 @@ class Demo extends React.Component {
           {this.state.homeEnable && (
             <section className="homeContent-wrapper">
               <section className="col-lg-12 col-md-12 welcometext">
-                <h2>Welcome to our website</h2>
+                <h2>Welcome User, a experience to feel</h2>
                 <ul className="unordered-list">
-                  <li>If you are need of something you are at right place</li>
-                  <li>Bored at work,you are welcomed</li>
-                  <li>Sitting at home need something productive</li>
-                  <li>Wanna explore goods ?? you are at right place</li>
+                  <li>If you are need of something mesmerizing you are at right place</li>
+                  <li>Wanna try some new indian foods,you are welcomed</li>
+                  <li>Wanna feel the pleasure of spices</li>
+                  <li>Wanna explore foods?? you are at right place</li>
                 </ul>
               </section>
             </section>
@@ -258,35 +181,47 @@ class Demo extends React.Component {
           {this.state.aboutEnable && (
             <section className="col-lg-12 col-md-12 col-sm-12 aboutContent-wrapper">
               <p>
-              Our Walkart has all the electronic and houseneed items.We are in this feild for past three decades
+              Our Desi Foods has home cooked foods items.We are in this feild for past three decades and we do offer for franchise
               </p>
+            <span  className="mt10">Indian cuisine is as diverse as its culture, with each region boasting its own unique flavors, ingredients, and cooking styles. It is renowned for its rich and aromatic spices, vibrant colors, and a wide variety of vegetarian and non-vegetarian dishes. Indian cuisine is deeply rooted in tradition and history, 
+              influenced by ancient customs, trade routes, and the cultural exchange that has occurred over centuries.</span>
+            <div>Regional Diversity:
+
+India's vast geographical and cultural diversity is reflected in its cuisine. Here are some of the prominent regional cuisines:
+
+North Indian Cuisine: Known for its rich gravies, bread (roti/naan), and dairy products like paneer (cottage cheese) and ghee (clarified butter). Popular dishes include butter chicken, tandoori chicken, and various types of kebabs.
+South Indian Cuisine: Characterized by its generous use of spices, rice, coconut, and seafood. South Indian cuisine includes dishes like dosa (fermented crepe), idli (steamed rice cake), sambar (lentil stew), and rasam (spicy soup).
+East Indian Cuisine: Influenced by Bengali, Odia, and Assamese traditions, East Indian cuisine features freshwater fish, rice, and mustard oil. Dishes like macher jhol (fish curry), roshogolla (syrupy dessert), and pitha (rice cake) are popular in this region.
+West Indian Cuisine: Known for its diverse range of flavors, West Indian cuisine includes dishes from Gujarat, Maharashtra, and Rajasthan. It features an array of snacks like dhokla, pav bhaji, and vada pav, as well as spicy curries and sweets like modak and shrikhand.</div>
+            
+            
             </section>
           )}
           {this.state.listEnable && (
             <section className="col-lg-12 col-md-12 col-sm-12 listContent-wrapper">
-              <section className="card-deck mb-3 text-center">
                 {this.state.itemData.map((item, i) => {
                   return (
                     <section
                       key={i}
-                      className="card mb-4 box-shadow col-lg-3 col-md-3 col-sm-4 col-xs-6"
+                      className="box-shadow col-lg-3 col-md-3 col-sm-4 col-xs-6 mt10"
                     >
-                      <section className="card-header">
+                      <section className="cardContainer col-lg-12 col-md-12 col-xs-12 p0">
+                      <section className="">
                         <h4 className="my-0 font-weight-normal">
                           {item.itemNameToAdd}
                         </h4>
                       </section>
-                      <section className="card-body">
+                      <section className="">
                         <img
                           src={item.itemImage}
                           width="100px"
                           height="90px"
                           alt="cart "
                         />
-                        <h1 className="pricing-card-title">
+                        <h3 className="">
                           ${item.itemPrice}{" "}
                           <small className="text-muted">/ per piece</small>
-                        </h1>
+                        </h3>
                         <ul className="list-unstyled mt-3 mb-4">
                           <li>
                             {" "}
@@ -295,26 +230,21 @@ class Demo extends React.Component {
                           <li>
                             Origin of seller:<strong>{item.itemOrigin}</strong>
                           </li>
-                          <li>Priority email support</li>
-                          <li>Help center access</li>
                         </ul>
-
                         <button
                           type="button"
+                          data-toggle="modal"
+                          data-target={`#exampleModalToggle_${i}`}
                           className="btn btn-lg btn-block btn-primary"
-                          onClick={this.onAddCart.bind(
-                            this,
-                            item.itemNameToAdd,
-                            item.itemPrice
-                          )}
                         >
-                          Add to cart
+                          Add
                         </button>
                       </section>
+                      </section>
+                      <ItemModal item={item} key={i} currentId={i} onAddCart={this.onAddCart}/>
                     </section>
                   );
                 })}
-              </section>
             </section>
           )}
           {this.state.statisticsEnable && !this.state.statisticsEmpty && (
@@ -374,34 +304,7 @@ class Demo extends React.Component {
           )}
         </section>
 
-        <footer className="container-fluid">
-          <section className="col-lg-12 col-md-12 col-sm-12 footer-section">
-            <section className="col-lg-8 col-md-8 col-sm-8 footer-search ">
-              <section className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search here for different dishes"
-                  aria-label="Search here for different dishes"
-                />
-                <section className="input-group-append">
-                  <span className="btn btn-primary searchbtn">search</span>
-                </section>
-              </section>
-            </section>
-            <section className="col-lg-12 col-md-12 footerStatistics">
-              <span>
-                To check the <strong>overall statistics</strong> of the day!!!!
-                <span
-                  className="btn statisticsbtn"
-                  onClick={this.statisticsShow}
-                >
-                  Click Here
-                </span>
-              </span>
-            </section>
-          </section>
-        </footer>
+        
       </section>
     );
   }
