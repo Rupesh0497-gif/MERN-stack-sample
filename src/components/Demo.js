@@ -2,6 +2,12 @@ import React from "react";
 import axios from "axios";
 import ManageItem from "./ManageItem.js";
 import ItemModal from "./ItemModal.js";
+import MainDishes from "../assert/maindishes.png";
+import Sides from "../assert/Sides.png";
+import Logo from "../assert/Logo.png";
+import Food1 from "../assert/1.jpg";
+import Food2 from "../assert/2.jpg";
+import Food3 from "../assert/3.jpg";
 class Demo extends React.Component {
   constructor(props) {
     super(props);
@@ -18,14 +24,16 @@ class Demo extends React.Component {
       overallOrderStatistics: [],
       welfareAmount: 0,
       TotalPrice: 0,
-      welfareEnable:false
+      welfareEnable: false,
+      currSlide: 1,
+      cartMsg: "",
     };
   }
   componentDidMount = () => {
     axios.get("http://localhost:5000/itemsDetails/").then((res) => {
       let Responsedata = res.data;
       console.log(Responsedata);
-      this.setState({ itemData: Responsedata });
+      this.setState({ itemData: Responsedata, cartMsg: "" });
     });
   };
 
@@ -37,7 +45,8 @@ class Demo extends React.Component {
       statisticsEnable: false,
       managelistEnable: false,
       statisticsEmpty: false,
-      welfareEnable:false
+      welfareEnable: false,
+      cartMsg: "",
     });
   };
   aboutContent = () => {
@@ -48,7 +57,8 @@ class Demo extends React.Component {
       managelistEnable: false,
       statisticsEnable: false,
       statisticsEmpty: false,
-      welfareEnable:false
+      welfareEnable: false,
+      cartMsg: "",
     });
   };
   menuContent = () => {
@@ -59,16 +69,17 @@ class Demo extends React.Component {
       statisticsEnable: false,
       statisticsEmpty: false,
       managelistEnable: false,
-      welfareEnable:false
+      welfareEnable: false,
+      cartMsg: "",
     });
   };
   dropdownlistShow = () => {
     if (this.state.dropdownlistEnable === true) {
-      this.setState({ dropdownlistEnable: false });
+      this.setState({ dropdownlistEnable: false, cartMsg: "" });
       console.log("aaaaa");
     } else {
       console.log("bbbbb");
-      this.setState({ dropdownlistEnable: true });
+      this.setState({ dropdownlistEnable: true, cartMsg: "" });
     }
   };
   manageList = () => {
@@ -79,19 +90,21 @@ class Demo extends React.Component {
       aboutEnable: false,
       statisticsEnable: false,
       statisticsEmpty: false,
-      welfareEnable:false
+      welfareEnable: false,
+      cartMsg: "",
     });
   };
-  
+
   welfareList = () => {
     this.setState({
-      welfareEnable:true,
+      welfareEnable: true,
       managelistEnable: false,
       homeEnable: false,
       listEnable: false,
       aboutEnable: false,
       statisticsEnable: false,
       statisticsEmpty: false,
+      cartMsg: "",
     });
   };
   cartShow = () => {
@@ -104,6 +117,7 @@ class Demo extends React.Component {
         listEnable: false,
         homeEnable: false,
         aboutEnable: false,
+        cartMsg: "",
       });
     } else {
       this.setState({
@@ -111,29 +125,58 @@ class Demo extends React.Component {
         statisticsEnable: false,
         listEnable: false,
         homeEnable: false,
+        cartMsg: "",
         aboutEnable: false,
       });
     }
   };
-  onAddCart = (itemName, price) => {
+  onAddCart = (itemName, price, count, category) => {
     let cartData = {
       itemName: itemName,
       orderPrice: price,
+      category: category
     };
-    let value = this.state.TotalPrice + price;
+    let cartItems = [];
+    let itemprice = 0;
+    for (let i = 1; i <= count; i++) {
+      itemprice = itemprice + price;
+      cartItems.push(cartData);
+    }
+    let value = this.state.TotalPrice + itemprice;
     this.setState({
-      orderStatistics: [...this.state.orderStatistics, cartData],
+      orderStatistics: [...this.state.orderStatistics, ...cartItems],
       TotalPrice: value,
+      cartMsg: "Item has been added to cart",
     });
-  }
+  };
   welfareContributeFunc = (e) => {
-    this.setState({ welfareAmount: e.target.value });
+    this.setState({ welfareAmount: e.target.value, cartMsg: "" });
   };
   onWelfareSubmit = (e) => {
-    this.setState({ TotalPrice: this.state.welfareAmount });
+    this.setState({ TotalPrice: this.state.welfareAmount, cartMsg: "" });
     e.preventDefault();
     document.getElementById("welfare-submit").reset();
   };
+  onSlideClick(flow) {
+    let currentId = this.state.currSlide;
+    document
+      .getElementById(`carosal_Item_${currentId}`)
+      .classList.remove("active");
+    if (flow === "prev") {
+      currentId = currentId - 1;
+      if (currentId < 0 || currentId === 0) {
+        currentId = 3;
+      }
+    } else {
+      currentId = currentId + 1;
+      currentId = currentId > 3 ? 1 : currentId;
+    }
+    this.setState({ currSlide: currentId }, () => {
+      document
+        .getElementById(`carosal_Item_${this.state.currSlide}`)
+        .classList.add("active");
+    });
+  }
   render() {
     return (
       <section className="page-wrapper mainContainer">
@@ -141,18 +184,33 @@ class Demo extends React.Component {
           <section className="col-md-12 col-lg-12 col-sm-12 header">
             <section className="col-lg-12 col-md-12 col-sm-12 navContent position-relative">
               <ul className="nav">
-                <li className={`${this.state.homeEnable? 'selected': ''}`} onClick={this.homeContent}>Home</li>
-                <li className={`${this.state.aboutEnable? 'selected': ''}`} onClick={this.aboutContent}>About Us</li>
-                <li className={`${this.state.listEnable? 'selected': ''}`} onClick={this.menuContent}>Today's Special</li>
+                <li
+                  className={`${this.state.homeEnable ? "selected" : ""}`}
+                  onClick={this.homeContent}
+                >
+                  Home
+                </li>
+                <li
+                  className={`${this.state.listEnable ? "selected" : ""}`}
+                  onClick={this.menuContent}
+                >
+                  Available dishes
+                </li>
+                <li
+                  className={`${this.state.aboutEnable ? "selected" : ""}`}
+                  onClick={this.aboutContent}
+                >
+                  About Us
+                </li>
                 <li className="dropdowntrigger" onClick={this.dropdownlistShow}>
                   My Profile
                   {this.state.dropdownlistEnable && (
                     <ul className="position-absolute dropdownlist" role="menu">
-                      <li>Your Account</li>
-                      <li>See your Orders</li>
                       <li onClick={this.cartShow}>Cart</li>
-                      <li onClick={this.manageList}>Build your own fortune</li>
-                      <li onClick={this.welfareList}>Your Contribution for Welfare</li>
+                      <li onClick={this.manageList}>Add Items and Manage Orders</li>
+                      <li onClick={this.welfareList}>
+                        Your Contribution for Welfare
+                      </li>
                       <li>
                         <a href="/">Sign Out</a>
                       </li>
@@ -166,63 +224,219 @@ class Demo extends React.Component {
 
         <section className="container mainpageContent" role="main">
           {this.state.homeEnable && (
-            <section className="homeContent-wrapper">
-              <section className="col-lg-12 col-md-12 welcometext">
-                <h2>Welcome User, a experience to feel</h2>
-                <ul className="unordered-list">
-                  <li>If you are need of something mesmerizing you are at right place</li>
-                  <li>Wanna try some new indian foods,you are welcomed</li>
-                  <li>Wanna feel the pleasure of spices</li>
-                  <li>Wanna explore foods?? you are at right place</li>
+            <section
+              className="homeContent-wrapper mt10"
+              style={{
+                background: "white",
+                border: "1px solid #ddd",
+                "border-radius": "15px",
+                "box-shadow": "1px 2px 2px 0px",
+                display: "flex",
+                padding: "15px",
+              }}
+            >
+              <section className="col-lg-8 col-md-8 col-sm-8 welcometext mt10">
+                <h2 className="mt10">Welcome to Tally's Desi Foods!</h2>
+                <p className="mt10">Discover the Magic of Authentic Flavors</p>
+                <ul className="unordered-list mt10">
+                  <li>
+                    Delve into a world where every dish tells a story of
+                    tradition and taste.
+                  </li>
+                  <li>
+                    Embark on a culinary journey with our diverse selection of
+                    Indian cuisine.
+                  </li>
+                  <li>
+                    Experience the warmth of spices that will tantalize your
+                    palate.
+                  </li>
+                  <li>
+                    Your adventure with food begins here – explore, search, and
+                    indulge.
+                  </li>
                 </ul>
+              </section>
+              <section className="col-lg-4 col-md-4 col-sm-4 col-xs-4 mt10">
+                <div style={{ fontSize: "36px", fontWeight: "bold" }}>
+                  Today's Special
+                </div>
+                <div
+                  id="carouselExampleAutoplaying"
+                  class="carousel slide"
+                  data-bs-ride="carousel"
+                  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10"
+                >
+                  <div class="carousel-inner">
+                    <div class="carousel-item active" id={`carosal_Item_1`}>
+                      <img
+                        src={Food1}
+                        class="d-block"
+                        width={"200px"}
+                        height={"200px"}
+                        alt="..."
+                      />
+                    </div>
+                    <div class="carousel-item" id={`carosal_Item_2`}>
+                      <img
+                        src={Food2}
+                        class="d-block"
+                        width={"200px"}
+                        height={"200px"}
+                        alt="..."
+                      />
+                    </div>
+                    <div class="carousel-item" id={`carosal_Item_3`}>
+                      <img
+                        src={Food3}
+                        class="d-block"
+                        width={"200px"}
+                        height={"200px"}
+                        alt="..."
+                      />
+                    </div>
+                  </div>
+                  <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#carouselExampleAutoplaying"
+                    data-bs-slide="prev"
+                    style={{ border: "none" }}
+                    onClick={(e) => {
+                      this.onSlideClick("prev");
+                    }}
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden"></span>
+                  </button>
+                  <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#carouselExampleAutoplaying"
+                    data-bs-slide="next"
+                    style={{ border: "none " }}
+                    onClick={(e) => {
+                      this.onSlideClick("next");
+                    }}
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden"></span>
+                  </button>
+                </div>
               </section>
             </section>
           )}
           {this.state.aboutEnable && (
-            <section className="col-lg-12 col-md-12 col-sm-12 aboutContent-wrapper">
-              <p>
-              Our Desi Foods has home cooked foods items.We are in this feild for past three decades and we do offer for franchise
-              </p>
-            <span  className="mt10">Indian cuisine is as diverse as its culture, with each region boasting its own unique flavors, ingredients, and cooking styles. It is renowned for its rich and aromatic spices, vibrant colors, and a wide variety of vegetarian and non-vegetarian dishes. Indian cuisine is deeply rooted in tradition and history, 
-              influenced by ancient customs, trade routes, and the cultural exchange that has occurred over centuries.</span>
-            <div>Regional Diversity:
-
-India's vast geographical and cultural diversity is reflected in its cuisine. Here are some of the prominent regional cuisines:
-
-North Indian Cuisine: Known for its rich gravies, bread (roti/naan), and dairy products like paneer (cottage cheese) and ghee (clarified butter). Popular dishes include butter chicken, tandoori chicken, and various types of kebabs.
-South Indian Cuisine: Characterized by its generous use of spices, rice, coconut, and seafood. South Indian cuisine includes dishes like dosa (fermented crepe), idli (steamed rice cake), sambar (lentil stew), and rasam (spicy soup).
-East Indian Cuisine: Influenced by Bengali, Odia, and Assamese traditions, East Indian cuisine features freshwater fish, rice, and mustard oil. Dishes like macher jhol (fish curry), roshogolla (syrupy dessert), and pitha (rice cake) are popular in this region.
-West Indian Cuisine: Known for its diverse range of flavors, West Indian cuisine includes dishes from Gujarat, Maharashtra, and Rajasthan. It features an array of snacks like dhokla, pav bhaji, and vada pav, as well as spicy curries and sweets like modak and shrikhand.</div>
-            
-            
+            <section
+              className="col-lg-12 col-md-12 col-sm-12 aboutContent-wrapper mt10"
+              style={{
+                background: "white",
+                display: "flex",
+                padding: "15px",
+                border: "1px solid #ddd",
+                "border-radius": "15px",
+                "box-shadow": "1px 2px 2px 0px",
+              }}
+            >
+              <section
+                className="col-md-4 col-lg-4 col-sm-4 mt10"
+                style={{ textAlign: "center" }}
+              >
+                <img src={Logo} width={"250px"} height={"250px"} alt="logo" />
+              </section>
+              <section className="col-lg-8 col-md-8 col-sm-8 mt10">
+                <p className="mt10">
+                  Our Desi Foods has home cooked foods items.We are in this
+                  feild for past three decades and we do offer for franchise
+                </p>
+                <p className="mt10">
+                  Our Desi Foods offers a delectable array of home-cooked Indian
+                  dishes, crafted with love and expertise honed over three
+                  decades in the culinary field. Inspired by our experiences as
+                  international students craving authentic home-cooked meals, we
+                  noticed a gap in the market for such offerings in Tally. Thus,
+                  we envisioned a platform where people could not only share
+                  their homemade delights but also earn from their culinary
+                  skills.
+                </p>
+                <p className="mt10">
+                  Indian cuisine, steeped in tradition and diversity, is a
+                  testament to the country's rich cultural tapestry. From the
+                  robust flavors of North Indian gravies and bread to the
+                  aromatic spices of South Indian delicacies, each region boasts
+                  its own unique culinary heritage.
+                </p>
+                <p className="mt10">
+                  In the North, savor the richness of butter chicken, tandoori
+                  delights, and succulent kebabs. Journey South for the
+                  tantalizing taste of dosas, idlis, and spicy sambars, enriched
+                  with coconut and seafood. Head East to indulge in freshwater
+                  fish curries, sweet roshogollas, and comforting rice cakes.
+                  Meanwhile, in the West, revel in the diverse flavors of
+                  dhoklas, spicy curries, and delightful sweets like modaks and
+                  shrikhand.
+                </p>
+                <p className="mt10">
+                  Our franchise offers you the opportunity to bring the warmth
+                  and flavors of home-cooked Indian meals to your community,
+                  bridging the gap between nostalgia and convenience. Join us in
+                  celebrating the richness of Indian cuisine while creating a
+                  rewarding culinary venture for yourself.
+                </p>
+              </section>
             </section>
           )}
           {this.state.listEnable && (
             <section className="col-lg-12 col-md-12 col-sm-12 listContent-wrapper">
-                {this.state.itemData.map((item, i) => {
-                  return (
-                    <section
-                      key={i}
-                      className="box-shadow col-lg-3 col-md-3 col-sm-4 col-xs-6 mt10"
-                    >
-                      <section className="cardContainer col-lg-12 col-md-12 col-xs-12 p0">
-                      <section className="">
+              {this.state.cartMsg !== "" && (
+                <div
+                  className="col-lg-12 col-md-12 col-sm-12"
+                  style={{
+                    "font-size": "30px",
+                    "font-weight": "bold",
+                    color: "green",
+                    background: "white",
+                    "border-radius": "15px",
+                  }}
+                >
+                  {this.state.cartMsg}
+                </div>
+              )}
+              {this.state.itemData.map((item, i) => {
+                return (
+                  <section
+                    key={i}
+                    className="box-shadow col-lg-3 col-md-3 col-sm-4 col-xs-6 mt10"
+                  >
+                    <section className="cardContainer col-lg-12 col-md-12 col-xs-12">
+                      <section className="col-lg-12 col-md-12 col-xs-12 p0 mt10">
                         <h4 className="my-0 font-weight-normal">
                           {item.itemNameToAdd}
                         </h4>
                       </section>
-                      <section className="">
+                      <section className="col-lg-12 col-md-12 col-xs-12 p0 mt10">
                         <img
-                          src={item.itemImage}
-                          width="100px"
-                          height="90px"
+                          src={
+                            item.itemCategory &&
+                            item.itemCategory.toLowerCase().includes("sides")
+                              ? Sides
+                              : MainDishes
+                          }
+                          width="200px"
+                          height="200px"
                           alt="cart "
                         />
-                        <h3 className="">
+                        <h3 className="mt10">
                           ${item.itemPrice}{" "}
                           <small className="text-muted">/ per piece</small>
                         </h3>
-                        <ul className="list-unstyled mt-3 mb-4">
+                        <ul className="list-unstyled mt-3 mb-4 mt10">
                           <li>
                             {" "}
                             category :<strong>{item.itemCategory}</strong>
@@ -235,53 +449,65 @@ West Indian Cuisine: Known for its diverse range of flavors, West Indian cuisine
                           type="button"
                           data-toggle="modal"
                           data-target={`#exampleModalToggle_${i}`}
-                          className="btn btn-lg btn-block btn-primary"
+                          className="btn btn-lg btn-block btn-primary mt10"
                         >
                           Add
                         </button>
                       </section>
-                      </section>
-                      <ItemModal item={item} key={i} currentId={i} onAddCart={this.onAddCart}/>
                     </section>
-                  );
-                })}
+                    <ItemModal
+                      item={item}
+                      key={i}
+                      currentId={i}
+                      onAddCart={this.onAddCart}
+                    />
+                  </section>
+                );
+              })}
             </section>
           )}
           {this.state.statisticsEnable && !this.state.statisticsEmpty && (
             <section className="col-lg-12 col-md-12 statistics-wrapper">
               <section className="col-lg-12 col-md-12 col-sm-12 statisticsTable">
-                <table>
-                  <thead>
-                    <tr>
-                      <td>S.No</td>
-                      <td>Item Name</td>
-                      <td>Item Price</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.orderStatistics.map((item, i) => {
-                      return (
-                        <tr key={i}>
-                          <td>{i + 1}</td>
-                          <td>{item.itemName}</td>
-                          <td>{item.orderPrice}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                {this.state.orderStatistics.map((item, i) => {
+                  return (
+                    <section
+                      className="col-lg-12 col-md-12 col-sm-12 mt10"
+                      style={{ display: "flex", background: 'white', 'border-radius': '15px', 'box-shadow': '1px 2px 2px 0px', height: '80px', padding:'15px' }}
+                    >
+                      <section className="col-lg-4 col-md-4 col-sm-4">
+                      <img
+                          src={
+                            item.category &&
+                            item.category.includes("sides")
+                              ? Sides
+                              : MainDishes
+                          }
+                          width="50px"
+                          height="50px"
+                          alt="cart "
+                        />
+                      </section>
+                      <section className="col-lg-4 col-md-4 col-sm-4">
+                        {item.itemName}
+                      </section>
+                      <section className="col-lg-4 col-md-4 col-sm-4">
+                        ${item.orderPrice}
+                      </section>
+                    </section>
+                  );
+                })}
               </section>
-              <section className="col-lg-12 col-md-12 col-sm-12 col-xs-12 statistics-align">
-                <section className="col-lg-6 col-md-6 col-sm-6 col-xs-6 statistics-align-center">
-                  <section className="col-md-6 col-lg-6 col-sm-6 ">
+              <section className="col-lg-12 col-md-12 col-sm-12 col-xs-12 statistics-align mt10">
+                <section className="col-lg-6 col-md-6 col-sm-6 col-xs-6 statistics-align-center" style={{'background': 'white',
+    'padding': '10px',
+    'border-radius': '15px',
+    'text-align': 'center'}}>
+                  <section className="col-md-6 col-lg-6 col-sm-6">
                     <strong>Total </strong>
                   </section>
-                  <section className="col-md-6 col-lg-6 col-sm-6 ">
-                    <input
-                      type="button"
-                      className="btn btn-primary"
-                      value={this.state.TotalPrice}
-                    />
+                  <section className="col-md-6 col-lg-6 col-sm-6 " style={{fontSize: '20px', fontWeight: 'bold'}}>
+                      ${this.state.TotalPrice}
                   </section>
                 </section>
               </section>
@@ -297,14 +523,15 @@ West Indian Cuisine: Known for its diverse range of flavors, West Indian cuisine
               <ManageItem />
             </section>
           )}
-           {this.state.welfareEnable && (
+          {this.state.welfareEnable && (
             <section className="welfare-wrapper">
-             <p>your contribution till date for welfare of downtrodden people is <strong>{this.state.welfareAmount}</strong></p>
+              <p>
+                your contribution till date for welfare of downtrodden people is{" "}
+                <strong>{this.state.welfareAmount}</strong>
+              </p>
             </section>
           )}
         </section>
-
-        
       </section>
     );
   }

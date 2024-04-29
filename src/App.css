@@ -175,4 +175,8 @@ padding: 10px 0;
     background-color: white;
     padding: 10px;
     box-shadow: 1px 2px 2px 0px;
+    text-align: center;
+}
+.carousel-item img{
+  margin: auto;
 }

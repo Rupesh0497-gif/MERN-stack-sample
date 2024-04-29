@@ -1,6 +1,9 @@
 import React,{useState} from 'react'
 const ItemModal = ({item, currentId, onAddCart}) =>{
-    const [addedCount, setAddedCount] = useState(0)
+    const [addedCount, setAddedCount] = useState(1)
+    const onAdd = (name, price, count, category) =>{
+      onAddCart(name, price, count, category)
+    }
     return (
 <>
 <div class="modal fade" id={`exampleModalToggle_${currentId}`} aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
@@ -32,7 +35,12 @@ const ItemModal = ({item, currentId, onAddCart}) =>{
             let currentCount = addedCount + 1;
             setAddedCount(currentCount)
         }}>+</span>
-        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal" onAddCart={(e)=>{onAddCart(e,item.itemNameToAdd, item.itemPrice)}}>Add Item</button>
+        <button 
+        type="button"
+        className="btn btn-primary"
+        data-dismiss="modal"
+        aria-label="Close"
+        data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal" onClick={(e)=>{onAdd(item.itemNameToAdd, item.itemPrice, addedCount, item.itemCategory.toLowerCase())}}>Add Item</button>
       </div>
     </div>
   </div>
