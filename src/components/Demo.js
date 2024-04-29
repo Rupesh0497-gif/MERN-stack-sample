@@ -149,9 +149,9 @@ class Demo extends React.Component {
                   {this.state.dropdownlistEnable && (
                     <ul className="position-absolute dropdownlist" role="menu">
                       <li>Your Account</li>
-                      <li>Your Orders</li>
+                      <li>See your Orders</li>
                       <li onClick={this.cartShow}>Cart</li>
-                      <li onClick={this.manageList}>Manage Orders</li>
+                      <li onClick={this.manageList}>Build your own fortune</li>
                       <li onClick={this.welfareList}>Your Contribution for Welfare</li>
                       <li>
                         <a href="/">Sign Out</a>

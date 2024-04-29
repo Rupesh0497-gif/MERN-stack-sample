@@ -1,3 +1,8 @@
+.App{
+  background-image: url('./assert/food.jpg');
+  min-height: 100vh;
+}
+
 .p0{
   padding:0;
 }
@@ -22,7 +27,7 @@
   padding: 0;
  }
  .headerContent{
-  background-color: darkmagenta;
+  background-color: transparent;
   padding: 20px 0;
   display: flex;
  }
@@ -36,24 +41,32 @@
   background-color: white;
  }
  .headerContent h1{
-  color: red;
-  text-shadow: 2px 3px 3px violet;
-  font-family: 'Times New Roman', Times, serif;
+  color: black;
+  text-shadow: 2px 3px 3px rgb(138, 91, 3);
+  font-family: 'sans-serif';
   margin: 0 30px;
   font-weight: bold;
   }
   .navContent{
-  background-color: teal;
+  background-color: transparent;
+  }
+  .navContent .nav{
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 20px;
   }
   
   .nav li{
   padding:10px 50px;
-  color: white;
   font-weight: bold; 
   }
   .selected{
-  background-color: white;
- color: blue !important;
+  background-color: black;
+ border-radius: 20px;
+ color: white;
+  }
+  .page-wrapper{
+    min-height: 80vh;
   }
  .mainpageContent .listContent-wrapper .placeOrder .badgeNumber{
   font-size: 15px;
@@ -80,7 +93,7 @@
  padding:20px;
  }
  .footer-section {
-  background-color: teal;
+  background-color: #CEB888;
   height: 200px;
   justify-content: flex-end;
  }
@@ -116,7 +129,7 @@
    background-color: white;position:relative;
  }
  .dropdowntrigger li:hover{
-color: blue;
+color: #CEB888;
  }
  .footer-section .footerStatistics .statisticsbtn:hover{
   background-color: gray;
@@ -129,6 +142,8 @@ color: blue;
  .manageItem-wrapper .manageItem{
    border: 1px gray solid;
    border-radius: 5px;
+   background-color: white;
+   box-shadow: 1px 2px 2px 0px;
  }
  .manageItem-wrapper .manageItem .row{
 padding: 10px 0;
@@ -155,7 +170,9 @@ padding: 10px 0;
   margin-top: 10px;
 }
 .cardContainer{
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 1px 2px 2px 0px;
 }

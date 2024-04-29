@@ -97,23 +97,13 @@ class Login extends React.Component {
         <section className="container-fluid main-container p0">
           <section className="header-wrapper col-lg-12 col-md-12 col-sm-12 p0">
             <section className="col-md-12 col-lg-12 col-sm-12 headerContent">
-              <section className="col-lg-8 col-md-8 col-sm-12">
+              <section className="col-lg-10 col-md-10 col-sm-12">
                 <h1>Tally's Desi Foods</h1>
               </section>
-              <section className="col-lg-4 col-md-4 col-sm-12">
-                <span className="support-text">
-                  Support daily wages with some amount.No amount is less so
-                  contribute to our workers folks.
-                </span>
-                <span
-                  className="btn button-text"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                >
-                  Donate now!!!!{" "}
-                </span>
+              <section className="col-lg-2 col-md-2 col-sm-12">
+                <button type="button" className="btn btn-light" style={{marginRight: '15px'}}>Login</button>
+                <button type="button" className="btn btn-primary">SignUp</button>
               </section>
-
               <section
                 className="modal fade"
                 id="exampleModal"
