@@ -258,9 +258,12 @@ class Demo extends React.Component {
                 </ul>
               </section>
               <section className="col-lg-4 col-md-4 col-sm-4 col-xs-4 mt10">
-                <div style={{ fontSize: "36px", fontWeight: "bold" }}>
-                  Today's Special
-                </div>
+                {/* <div style={{ fontSize: "36px", fontWeight: "bold" }}>
+                  Today's Specials
+                </div> */}
+                 <div style={{
+                 fontSize: "20px",  fontFamily: "Belleza, sans-serif",fontWeight: "bold",textAlign: "center", padding: "7px",border: "2px solid #ccc", borderRadius: "10px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"  }}>    TODAY'S SPECIALS!!
+                 </div>
                 <div
                   id="carouselExampleAutoplaying"
                   class="carousel slide"

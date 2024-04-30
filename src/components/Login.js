@@ -37,6 +37,7 @@ class Login extends React.Component {
             });
           } else {
             this.setState({ loginFlag: true },()=>{
+              sessionStorage.setItem("userLoggedIn", "Y")
               e.target.reset()
             });
           }
@@ -100,10 +101,12 @@ class Login extends React.Component {
               <section className="col-lg-10 col-md-10 col-sm-12">
                 <h1>Tally's Desi Foods</h1>
               </section>
+              {!this.state.loginFlag &&
               <section className="col-lg-2 col-md-2 col-sm-12">
                 <button type="button" className="btn btn-light" style={{marginRight: '15px'}}>Login</button>
                 <button type="button" className="btn btn-primary">SignUp</button>
               </section>
+              }
               <section
                 className="modal fade"
                 id="exampleModal"
@@ -308,16 +311,6 @@ class Login extends React.Component {
                 <span className="btn btn-primary searchbtn">search</span>
               </section>
             </section>
-          </section>
-          <section className="col-lg-12 col-md-12 footerStatistics">
-            <span>
-              To check the <strong>overall statistics</strong> of the day!!!!
-              <span
-                className="btn statisticsbtn"
-              >
-                Click Here
-              </span>
-            </span>
           </section>
         </section>
       </footer>
